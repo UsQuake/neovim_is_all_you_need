@@ -86,6 +86,18 @@ cmake -S . -B build \
 ln -sf build/compile_commands.json .
 ```
 
+### Option B: Makefile (via Bear)
+If you use raw `Makefiles`, use [Bear](https://github.com/rizsotto/Bear) to intercept build commands.
+
+```bash
+# 1. Clean previous build
+make clean
+
+# 2. Generate compile_commands.json using Bear
+# Note: Ensure your Makefile uses clang/clang++ (e.g., CC=clang CXX=clang++)
+bear -- make
+```
+
 ## Directory Structure
 
 Plugins are located in the native Neovim pack directory, loaded automatically on startup.
@@ -109,5 +121,7 @@ Plugins are located in the native Neovim pack directory, loaded automatically on
   https://github.com/neovim/neovim
 - Clangd Installation & Setup
   https://clangd.llvm.org/
+- Bear (Build EAR)
+  https://github.com/rizsotto/Bear
 - Microsoft Debug Adapter Protocol
   https://microsoft.github.io/debug-adapter-protocol/
