@@ -17,6 +17,9 @@ Unlike modern "batteries-included" distributions, this setup **rejects package m
 - **OS**: Linux / macOS
 - **Editor**: Neovim 0.11.0+
 - **Toolchain**: LLVM (`clang`, `clang++`, `lldb`)
+- **System Utilities**:
+  - `git`, `curl`, `tar`, `unzip` (Required for installation script)
+  - `treesitter-cli` (Required for syntax parser compilation)
 - **Build System**: CMake or Makefiles(with compilation-database generator like bear for indexing.)
 
 ---
