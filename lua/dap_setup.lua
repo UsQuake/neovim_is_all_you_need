@@ -1,83 +1,83 @@
 local dap = require("dap")
-
 local dapui = require("dapui")
 
-dap.adapters.cpp= {
 
-	type = "executable",
+--------------------------------------------------------------------------------
+-- 1. Adapter setup (using CodeLLDB)
+--------------------------------------------------------------------------------
+local codelldb_path = vim.fn.stdpath("config") .. "/codelldb/adapter/codelldb"
 
-	command = "/usr/bin/lldb",
-
-	-- args = {""}
-
+dap.adapters.codelldb = {
+    type = "server",
+    port = "${port}",
+    executable = {
+        command = codelldb_path,
+        args = { "--port", "${port}" },
+    }
 }
 
-dapui.setup()
-
+--------------------------------------------------------------------------------
+-- 2. Configuration
+--------------------------------------------------------------------------------
 local function find_root()
-
-	return vim.fs.dirname(vim.fs.find({
-
-		"compile_commands.json",
-
-		".git",
-
-		"CMakeLists.txt",
-
-	}, {upward = true})[1])
-
+    local paths = vim.fs.find(
+        { "compile_commands.json", ".git", "CMakeLists.txt" },
+        { upward = true, path = vim.fn.getcwd() }
+    )
+    if #paths > 0 then
+        return vim.fs.dirname(paths[1])
+    end
+    return vim.fn.getcwd()
 end
 
-
-
-local root = find_root() or vim.fn.getcwd()
+local root = find_root()
 
 dap.configurations.cpp = {
-
-	{
-
-	name = "Launch file",
-
-	type = "cpp",
-
-	request = "launch",
-
-	program = function()
-
-		return vim.fn.input("Path to executable: ", root .. "/build/bin/llama-bench", "file")
-
-	end,
-
-	cwd = root,
-
-	stopOnEntry = false,
-
-	args = {"-m", root .. "/models/gemma3-270m/gemma-3-270m-f16.gguf"},
-
-	},
-
+    {
+        name = "Launch Llama Bench (Manual)",
+        type = "codelldb", 
+        request = "launch",
+        program = function()
+            local default_path = root .. "/build/bin/llama-bench"
+            return vim.fn.input("Path to executable: ", default_path, "file")
+        end,
+        cwd = root,
+        stopOnEntry = false,
+        
+        args = function()
+            local default_args = "-m " .. root .. "/models/gemma3-270m/gemma-3-270m-f16.gguf"
+            local input = vim.fn.input("Args: ", default_args)
+            return vim.split(input, " ")
+        end,
+        
+        console = "integratedTerminal",
+    },
 }
 
 dap.configurations.c = dap.configurations.cpp
+dap.configurations.rust = dap.configurations.cpp
 
+--------------------------------------------------------------------------------
+-- 3. UI setup (DAP even listener setup)
+--------------------------------------------------------------------------------
+dapui.setup()
 
+dap.listeners.after.event_initialized["dapui_config"] = function()
+    dapui.open()
+end
+dap.listeners.before.event_terminated["dapui_config"] = function()
+    dapui.close()
+end
+dap.listeners.before.event_exited["dapui_config"] = function()
+    dapui.close()
+end
 
-dap.listeners.after.event_initialized["dapui_config"] = function() dapui.open() end
-
-dap.listeners.after.event_terminated["dapui_config"] = function() dapui.close() end
-
-dap.listeners.after.event_exited["dapui_config"] = function() dapui.close() end
-
-
-
-vim.keymap.set("n", "<leader>co", function() dap.continue() end)
-
-vim.keymap.set("n", "<leader>br", function() dap.toggle_breakpoint() end)
-
-vim.keymap.set("n", "<leader>st", function() dap.step_over() end)
-
-vim.keymap.set("n", "<leader>sti", function() dap.step_into() end)
-
-vim.keymap.set("n", "<leader>sto", function() dap.step_out() end)
-
-vim.keymap.set("n", "<leader>du", dapui.toggle)
+--------------------------------------------------------------------------------
+-- 4. Keymaps
+--------------------------------------------------------------------------------
+vim.keymap.set("n", "<leader>co", dap.continue, { desc = "DAP Continue" })
+vim.keymap.set("n", "<leader>br", dap.toggle_breakpoint, { desc = "DAP Toggle Breakpoint" })
+vim.keymap.set("n", "<leader>st", dap.step_over, { desc = "DAP Step Over" })
+vim.keymap.set("n", "<leader>sti", dap.step_into, { desc = "DAP Step Into" })
+vim.keymap.set("n", "<leader>sto", dap.step_out, { desc = "DAP Step Out" })
+vim.keymap.set("n", "<leader>du", dapui.toggle, { desc = "DAP UI Toggle" })

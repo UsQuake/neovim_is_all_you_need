@@ -10,3 +10,6 @@
 [submodule "pack/plugins/start/nvim-dap-virtual-text"]
 	path = pack/plugins/start/nvim-dap-virtual-text
 	url = https://github.com/theHamsta/nvim-dap-virtual-text
+[submodule "pack/plugins/start/nvim-nio"]
+	path = pack/plugins/start/nvim-nio
+	url = https://github.com/nvim-neotest/nvim-nio
