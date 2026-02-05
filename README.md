@@ -27,7 +27,7 @@ Workflow:
 
 1. Clone the repository to the config directory
 2. Initialize Git submodules (plugins)
-3. Run `bash install_codelldb.sh`.
+3. Run `sh install_codelldb.sh`.
 4. Configure the project using Clang
 5. Generate `compile_commands.json`
 6. Develop with full LSP & DAP support
@@ -50,7 +50,7 @@ cd ~/.config/nvim
 git submodule update --init --recursive
 
 # 4. Install CodeLLDB Adapter (No sudo required)
-bash install_codelldb.sh
+sh install_codelldb.sh
 ```
 
 ---
