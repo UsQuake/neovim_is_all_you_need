@@ -27,9 +27,10 @@ Workflow:
 
 1. Clone the repository to the config directory
 2. Initialize Git submodules (plugins)
-3. Configure the project using Clang
-4. Generate `compile_commands.json`
-5. Develop with full LSP & DAP support
+3. Run `bash install_codelldb.sh`.
+4. Configure the project using Clang
+5. Generate `compile_commands.json`
+6. Develop with full LSP & DAP support
 
 ---
 
@@ -47,6 +48,9 @@ git clone [https://github.com/UsQuake/neovim_is_all_you_need](https://github.com
 # Initialize and fetch all plugins (submodules)
 cd ~/.config/nvim
 git submodule update --init --recursive
+
+# 4. Install CodeLLDB Adapter (No sudo required)
+bash install_codelldb.sh
 ```
 
 ---
@@ -105,6 +109,8 @@ Plugins are located in the native Neovim pack directory, loaded automatically on
 ```text
 ~/.config/nvim/
 ├── init.lua
+├── install_codelldb.sh  # Downloader script
+├── codelldb/            # (Generated) Debugger binary (Ignored by Git)
 ├── lua/
 │   ├── config/      # Keymaps, Options
 │   └── plugins/     # LSP & DAP Setup
@@ -112,6 +118,7 @@ Plugins are located in the native Neovim pack directory, loaded automatically on
     ├── nvim-treesitter
     ├── nvim-dap
     ├── nvim-dap-ui
+    ├── nvim-nio
     └── nvim-dap-virtual-text
 ```
 
