@@ -115,8 +115,11 @@ Plugins are located in the native Neovim pack directory, loaded automatically on
 ├── install_codelldb.sh  # Downloader script
 ├── codelldb/            # (Generated) Debugger binary (Ignored by Git)
 ├── lua/
-│   ├── config/      # Keymaps, Options
-│   └── plugins/     # LSP & DAP Setup
+│   ├── appearance.lua       # UI & Colorscheme settings
+│   ├── dap_setup.lua        # Debug Adapter (CodeLLDB) setup
+│   ├── keymaps.lua          # Global keymappings
+│   ├── lsp_setup.lua        # LSP (Clangd) configuration
+│   └── treesitter_setup.lua # Syntax highlighting & parsing
 └── pack/plugins/start/
     ├── nvim-treesitter
     ├── nvim-dap
