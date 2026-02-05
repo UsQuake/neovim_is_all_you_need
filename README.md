@@ -15,9 +15,9 @@ Unlike modern "batteries-included" distributions, this setup **rejects package m
 ## Setup & Requirements
 
 - **OS**: Linux / macOS
-- **Editor**: Neovim 0.9.0+
+- **Editor**: Neovim 0.11.0+
 - **Toolchain**: LLVM (`clang`, `clang++`, `lldb`)
-- **Build System**: CMake (for generating compilation databases)
+- **Build System**: CMake or Makefiles(with compilation-database generator like bear for indexing.)
 
 ---
 
