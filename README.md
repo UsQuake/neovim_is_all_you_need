@@ -43,7 +43,7 @@ Since plugins are managed as submodules, you must clone recursively or initializ
 
 ```bash
 # Clone to local config
-git clone [https://github.com/UsQuake/neovim_is_all_you_need](https://github.com/UsQuake/neovim_is_all_you_need) ~/.config/nvim
+git clone https://github.com/UsQuake/neovim_is_all_you_need ~/.config/nvim
 
 # Initialize and fetch all plugins (submodules)
 cd ~/.config/nvim
