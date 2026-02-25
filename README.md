@@ -2,7 +2,7 @@
 
 ## Introduction
 
-This project provides a **minimalist, dependency-free Neovim configuration** for systems programming (C/C++, Rust).
+This project provides a **minimalist, dependency-free Neovim configuration** for systems programming (C/C++, Zig, Rust).
 
 Unlike modern "batteries-included" distributions, this setup **rejects package managers** (like lazy.nvim or packer) in favor of **Git Submodules** and native `runtimepath` management. It is designed to give the user full control over the editor environment.
 
