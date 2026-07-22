@@ -73,7 +73,6 @@ local function start_lsp(client)
     elseif client == "clangd" then
         config.cmd = { "clangd", "--background-index", "--clang-tidy", "--header-insertion=never", "--completion-style=detailed", "-j=8" }
         config.root_dir = vim.fs.root(0, {"compile_commands.json", ".git"})
-    end
     elseif client == "zls" then
         config.cmd = { "zls" }
         config.root_dir = vim.fs.root(0, { "build.zig", "zls.json", ".git"})
@@ -101,6 +100,7 @@ vim.api.nvim_create_autocmd('FileType', {
         start_lsp("clangd")
     end,
 })
+
 vim.api.nvim_create_autocmd('FileType', {
     pattern = { "zig" },
     callback = function()
